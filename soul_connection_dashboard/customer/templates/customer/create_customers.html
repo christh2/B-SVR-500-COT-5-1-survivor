@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un Employé</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style_cus.css' %}">
+</head>
+<body>
+    {% block content %}
+    <div class="navbar">
+        <div class="logo">Soul Connection</div>
+        <div>
+            <a href="{% url 'admin_app:dash' %}">Dashboard</a>
+            <a href="{% url 'coachs:coach' %}">Coaches</a>
+            <a href="{% url 'customers:customer' %}"class="active">Customers</a>
+            <a href="{% url 'tips:tips-list' %}">Tips</a>
+            <a href="{% url 'events:event-list' %}">Events</a>
+            <a href="{% url 'customers:compatibility' %}">Compatibility</a>
+        </div>
+        <div class="right-icons">
+            <div class="globe">🌍</div>
+            <div class="icon2">👤</div>
+        </div>
+    </div>
+    <div class="form-container">
+        <h1>Create Client</h1>
+        <form action="" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <div class="form-group">
+                <div class="input-field">
+                    <label for="id">ID:</label>
+                    {{form.id}}
+                </div>
+
+                <div class="input-field">
+                    <label for="name">Name:</label>
+                    {{form.name}}
+                </div>
+
+                <div class="input-field">
+                    <label for="surname">Surname:</label>
+                    {{form.surname}}
+                </div>
+
+                <div class="input-field">
+                    <label for="email">Email:</label>
+                    {{form.email}}
+                </div>
+
+                <div class="input-field">
+                    <label for="birth_date">Birth date:</label>
+                    {{form.birth_date}}
+                </div>
+
+                <div class="input-field">
+                    <label for="gender">Gender:</label>
+                    {{form.gender}}
+                </div>
+
+                <div class="input-field">
+                    <label for="work">Description:</label>
+                    {{form.description}}
+                </div>
+
+                <div class="input-field">
+                    <label for="astrological_sign">Astrological Sign:</label>
+                    {{form.astrological_sign}}
+                </div>
+
+                <div class="input-field">
+                    <label for="address">Adress:</label>
+                    {{form.address}}
+                </div>
+
+                <div class="input-field">
+                    <label for="phone_number">Phone number:</label>
+                    {{form.phone_number}}
+                </div>
+
+                <div class="input-field">
+                    <label for="image">Image:</label>
+                    {{form.image}}
+                </div>
+
+                <div class="input-field">
+                    <label for="coachs">Coach:</label>
+                    {{form.coach}}
+                </div>
+
+            </div>
+            <button type="submit" class="btn-submit">Create</button>
+        </form>
+    </div>
+    {% endblock %}
+</body>
+</html>

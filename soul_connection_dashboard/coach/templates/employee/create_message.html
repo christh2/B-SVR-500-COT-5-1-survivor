@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un Employé</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style_employee.css' %}">
+</head>
+<body>
+    {% block content %}
+    <div class="navbar">
+        <div class="logo">Soul Connection</div>
+        <div>
+            <a href="{% url 'admin_app:dash' %}">Dashboard</a>
+            <a href="{% url 'coachs:coach' %}" class="active">Coaches</a>
+            <a href="{% url 'customers:customer' %}">Customers</a>
+            <a href="{% url 'tips:tips-list' %}">Tips</a>
+            <a href="{% url 'events:event-list' %}">Events</a>
+            <a href="{% url 'customers:compatibility' %}">Compatibility</a>
+        </div>
+        <div class="right-icons">
+            <div class="globe">🌍</div>
+            <div class="icon2">👤</div>
+        </div>
+    </div>
+    <div class="form-container">
+        <h1>Send Message</h1>
+        <form action="" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <div class="form-group">
+                <div class="input-field">
+                    <label for="id">Sender</label>
+                    {{form.sender}}
+                </div>
+                <div class="input-field">
+                    <label for="name">Receiver</label>
+                    {{form.receiver}}
+                </div>
+
+                <div class="input-field">
+                    <label for="surname">Message:</label>
+                    {{form.content}}
+                </div>
+            </div>
+            <button type="submit" class="btn-submit">Send</button>
+        </form>
+        {{messages_error}}
+    </div>
+    
+    {% endblock %}
+</body>
+</html>

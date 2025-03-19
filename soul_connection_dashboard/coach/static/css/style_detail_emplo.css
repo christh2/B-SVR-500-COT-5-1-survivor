@@ -1,0 +1,487 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #fff;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar .logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+}
+
+.navbar div:nth-child(2) {
+    display: flex;
+    justify-content: center;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    margin: 0 15px;
+    font-weight: bold;
+    position: relative;
+}
+
+.navbar a.active {
+    color: #007bff;
+}
+
+.navbar a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    border-radius: 3px;
+    background-color: #007bff;
+}
+
+.navbar .right-icons {
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    margin-left: 10px;
+}
+
+.navbar .icon2 {
+    font-size: 18px;
+}
+
+.navbar .globe {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    color: #555;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 90px;
+    background-color: #f1f1f1;
+    color: #333;
+    margin-top: -10px;
+}
+
+.header h1 {
+    margin: 0;
+    margin-left: -55px;
+}
+
+.back-button {
+    padding: 10px 20px;
+    background-color: white;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: -50px;
+    font-size: 16px;
+}
+
+.container {
+    display: flex;
+    margin-top: 20px;
+    padding: 20px;
+    gap: 20px;
+}
+
+.left-pane, .right-pane {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.left-pane {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 600px; /* Augmenter la hauteur minimale */
+}
+
+.short-details .detail-item {
+    margin-bottom: 50px; /* Espacement entre les éléments */
+}
+
+/* Supprimer les bordures */
+.left-pane, .right-pane {
+    border: none; /* Supprime la bordure */
+}
+
+.user-info {
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.icone {
+    text-align: center;
+}
+
+.user-info img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    /* margin-bottom: 5px; */
+}
+
+.favorite-icon {
+    position: relative;
+    width: 20px;
+    height: 25px;
+    background-color: #434748;
+    margin-right: 20px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+/* Table Styles */
+.table-container-user{
+    margin-top: 20px;
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+}
+
+.table-container-user th,
+.table-container-user td {
+    color: #555;
+    margin-left: 30px;
+    margin-left: 5px;
+}
+
+.table-container-user th {
+    font-weight: bold;
+    color: #555;
+}
+
+.table-container-user td.value {
+    color: #333;
+    font-weight: bold;
+}
+
+.short-details {
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+/* Short Details */
+.short-details .detail-item strong {
+    color: #555;
+    margin-top: 70px;
+}
+
+.short-details .detail-item p {
+    color: #333;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.left-pane-box {
+    flex: 1; /* La colonne gauche prend moins de place */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+.left-pane .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.left-pane img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.table-container-user {
+    margin-bottom: 20px;
+}
+
+.short-details {
+    margin-top: 20px;
+}
+
+.detail-item {
+    margin-bottom: 15px;
+}
+
+.right-pane {
+    flex: 3;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.coach-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.coach-table th,
+.coach-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.coach-table th {
+    background-color: #f2f2f2;
+}
+
+.coach-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.initial-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    font-weight: bold;
+    color: #fff;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.coach-name {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-coach {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-coach input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.payment-methods {
+    font-style: italic;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.button-left {
+    display: flex;
+    gap: 10px;
+}
+
+.button-right {
+    display: flex;
+    gap: 10px;
+}
+
+.button-left button,
+.button-right button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-left button {
+    background-color: #007bff;
+    color: white;
+}
+
+.button-right button:first-child {
+    background-color: #1fd828;
+    color: white;
+}
+
+.button-right button:last-child {
+    background-color: #3215d4;
+    color: white;
+}
+
+.coach-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.coach-table th, .coach-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.coach-table th {
+    background-color: #f2f2f2;
+}
+
+.coach-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.initial-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    font-weight: bold;
+    color: #fff;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.coach-name {
+    display: flex;
+    align-items: center;
+}
+
+.coach-name a {
+    text-decoration: none;
+    color: #063666;
+    font-weight: bold;
+}
+
+.coach-name a:hover {
+    text-decoration: none;
+}
+
+.mes-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.mes-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.mes-button .dots {
+    font-size: 18px;
+}
+
+.mes-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.mes-button .dots {
+    font-size: 18px;
+}
+
+.mod-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.mod-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.mod-button .dots {
+    font-size: 18px;
+}
+
+.mod-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.mod-button .dots {
+    font-size: 18px;
+}
+
+.checkbox-coach {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-coach input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.edit-button, .delete-button, .chat-button, .inb-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff; /* Couleur de fond du bouton */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chat-button:hover {
+    background-color: #0056b3; /* Couleur au survol */
+}
+
+.inb-button:hover {
+    background-color: #0056b3; /* Couleur au survol */
+}
+
+.edit-button:hover {
+    background-color: #0056b3; /* Couleur au survol */
+}
+
+.delete-button {
+    background-color: #dc3545; /* Couleur pour le bouton de suppression */
+}
+
+.delete-button:hover {
+    background-color: #c82333; /* Couleur au survol pour le bouton de suppression */
+}

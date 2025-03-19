@@ -1,0 +1,100 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-color: gray;
+    align-items: center;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    flex-direction: column; /* Stacking elements vertically */
+}
+
+.title {
+    font-size: 120px;
+    font-weight: bold;
+    z-index: 2;
+    color: blue;
+    margin-right: 1000px;
+}
+
+.sous {
+        font-size: 60px;
+        font-weight: bold;
+        margin-bottom: 50px;
+        z-index: 1;
+        color: linear-gradient(135deg, #00008B 30%, #0000FF 50%, #FFB6C1 80%);
+        margin-bottom: -350px;
+        margin-right: 1000px;
+}
+
+/* Style de la box de connexion */
+.container {
+    width: 400px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin-left: 500px;
+}
+
+/* Centrer le titre */
+.con {
+    text-align: center;
+}
+
+/* Style des champs */
+input[type="password"],
+input[type="email"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Bouton de connexion */
+.button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 50px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.pass {
+    color: gray;
+    font-weight: bold;
+    margin-left: 50px;
+}
+
+/* Message d'erreur */
+.error-messages {
+    color: red;
+    padding: 10px;
+    border-radius: 5px;
+    animation: fadeOut 5s forwards;
+}
+
+/* Animation pour faire disparaître le message d'erreur */
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

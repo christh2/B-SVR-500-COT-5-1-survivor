@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Customers List</title>
+    {% load static %}
+    <style>
+        .navbar {
+            background-color: #fff;
+            padding: 15px 30px;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #007bff;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #555;
+            margin-right: 25px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a.active {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+        }
+
+        .navbar a:hover {
+            color: #007bff;
+        }
+
+        .navbar .right-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .icon {
+            margin-left: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .customer-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .customer-table th,
+        .customer-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .customer-table th {
+            background-color: #f2f2f2;
+        }
+
+        .customer-table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .initial-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            color: #fff;
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        .customer-name {
+            display: flex;
+            align-items: center;
+        }
+
+        .customer-name a {
+            text-decoration: none;
+            color: #063666;
+            font-weight: bold;
+        }
+
+        .customer-name a:hover {
+            text-decoration: none;
+        }
+
+        .action-button {
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        .action-button .dots {
+            font-size: 18px;
+        }
+
+        .checkbox-customer {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-customer input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .payment-methods {
+            font-style: italic;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .button-left {
+            display: flex;
+            gap: 10px;
+        }
+
+        .button-right {
+            display: flex;
+            gap: 10px;
+        }
+
+        .button-left button,
+        .button-right button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button-left button {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .button-right button:first-child {
+            background-color: #1fd828;
+            color: white;
+        }
+
+        .button-right button:last-child {
+            background-color: #3215d4;
+            color: white;
+        }
+
+        .payment-icon {
+            width: 30px;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    {% block content %}
+    <div class="navbar">
+        <div class="logo">Soul Connection</div>
+        <div>
+            <a href="{% url 'admin_app:dash' %}">Dashboard</a>
+            <a href="{% url 'coachs:coach' %}">Coaches</a>
+            <a href="{% url 'customers:customer' %}" class="active">Customers</a>
+            <a href="{% url 'tips:tips-list' %}">Tips</a>
+            <a href="{% url 'events:event-list' %}">Events</a>
+            <a href="{% url 'customers:compatibility' %}">Compatibility</a>
+        </div>
+        <div class="right-icons">
+            <div class="icon">🌍</div>
+            <div class="icon">👤</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Customers List</h1>
+        <p>You have a total of {{customers|length}} customers.</p>
+        <form class="d-flex" style="margin-bottom: 20px">
+            <input class="form-control me-2" type="search" name="name" placeholder="Nom" aria-label="Nom">
+            <input class="form-control me-2" type="search" name="surname" placeholder="Prénom" aria-label="Prénom">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <div class="button-container">
+            <div class="button-left">
+                <button>Bulk Action</button>
+                <button>Apply</button>
+            </div>
+            <div class="button-right">
+                <a href="{% url 'customers:customer-create' %}">
+                    <button style="background-color: #1fd828; color: white;">Add+</button>
+                </a>
+                <button>Export</button>
+            </div>
+        </div>
+
+        <table class="customer-table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="select_all" /> Customer</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Payment Methods</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cus in customers %}
+                <tr>
+                    <td class="checkbox-customer">
+                        <input type="checkbox" name="select_customer" value="{{ cus.id }}">
+                        <div class="customer-name">
+                            <div class="initial-circle" data-initials="{{ customer.name|slice:" :1" }}{{ customer.surname|slice:":1" }}">
+                                {{ cus.name|slice:":1" }}{{ cus.surname|slice:":1" }}
+                            </div>
+                            <a href="{% url 'customers:customer-detail' cus.id%}">{{ cus.name }} {{ cus.surname }}</a>
+                        </div>
+                    </td>
+                    <td>{{ cus.email }}</td>
+                    <td>{{ cus.phone_number }}</td>
+                    <td class="payment-methods">
+                        {% for payment in cus.payment_set.all %}
+                            {% if forloop.first %}
+                                {% if payment.payment_method == 'Bank Transfer' %}
+                                    <img src="{% static 'images/visa.png' %}" alt="Bank Transfer" class="payment-icon">
+                                {% elif payment.payment_method == 'Credit Card' %}
+                                    <img src="{% static 'images/mastercard.png' %}" alt="Credit Card" class="payment-icon">
+                                {% elif payment.payment_method == 'PayPal' %}
+                                    <img src="{% static 'images/paypal.png' %}" alt="PayPal" class="payment-icon">
+                                {% else %}
+                                    {{ payment.payment_method }}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <button class="action-button">
+                            <span class="dots">...</span>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.getElementById('select_all').addEventListener('click', function () {
+            const checkboxes = document.querySelectorAll('input[name="select_customer"]');
+            checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+        });
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 12)];
+
+            }
+            return color;
+        }
+
+        document.querySelectorAll('.initial-circle').forEach(circle => {
+            circle.style.backgroundColor = getRandomColor();
+        });
+    </script>
+    {% endblock %}
+</body>
+
+</html>

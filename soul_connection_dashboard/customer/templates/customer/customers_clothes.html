@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vêtement du client</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style_vete.css' %}">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">Soul Connection</div>
+        <div>
+            <a href="{% url 'admin_app:dash' %}">Dashboard</a>
+            <a href="{% url 'coachs:coach' %}">Coaches</a>
+            <a href="{% url 'customers:customer' %}"class="active">Customers</a>
+            <a href="{% url 'tips:tips-list' %}">Tips</a>
+            <a href="{% url 'events:event-list' %}">Events</a>
+            <a href="{% url 'customers:compatibility' %}">Compatibility</a>
+        </div>
+        <div class="right-icons">
+            <div class="globe">🌍</div>
+            <div class="icon2">👤</div>
+        </div>
+    </div>
+
+    <div class="header">
+        <button type="button" id="cancelDelete" class="back-button"><span>&larr;</span>Back</button>
+        <a href="{% url 'customers:customer-create-clothes' customer.id %}">
+            <button class="add-button">Add+</button>
+        </a>
+    </div>
+
+    <div class="form-box">
+        <h1>Clothing combination</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="ids">Enter the clothes ids :</label>
+            <input type="text" id="ids" name="ids" placeholder="Exemple: 1, 2, 3" required>
+            <button type="submit">Display</button>
+        </form>
+    </div>
+    <h1>Clothes of {{ customer.name }}</h1>
+
+    <div class="clothing-container">
+        {% if clothe %}
+            {% for item in clothe %}
+                <div class="clothing-item">
+                    <h2>{{ item.type }} {{ item.id }}</h2>
+                    <a href="{% url 'customers:customer-update-clothes' customer.id item.id %}">
+                    <img src="{{ item.image.url }}" alt="">
+                        <a href="{% url 'customers:customer-delete-clothes' customer.id item.id %}">
+                            <input type="button" class="delete-button" value="Delete">
+                        </a>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No clothes corresponds to this ids</p>
+        {% endif %}
+    </div>
+
+    <script>
+        // Gestion du bouton "Annuler"
+        document.getElementById("cancelDelete").onclick = function () {
+            history.back();
+        }
+    </script>
+</body>
+</html>

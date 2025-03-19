@@ -1,0 +1,48 @@
+/* Centre le conteneur au milieu de la page */
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 255, 0.651);
+    margin: 0;
+}
+
+/* Style du conteneur */
+.container {
+    width: 300px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+}
+
+/* Style du texte dans le conteneur */
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Style du bouton de déconnexion */
+button {
+    color: #fff;
+    background-color: red;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: darkred;
+}
+
+/*Supprime la décoration du lien à l'intérieur du bouton*/
+button a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}

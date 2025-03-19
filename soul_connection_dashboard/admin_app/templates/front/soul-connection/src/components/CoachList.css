@@ -1,0 +1,154 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+.container {
+    max-width: 1800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.coach-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.coach-table th,
+.coach-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.coach-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    color: #707070;
+}
+
+.coach-table td {
+    color: #373941;
+}
+
+.coach-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.initial-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.bg-color1 { background-color: #ff5733; }
+.bg-color2 { background-color: #33c1ff; }
+.bg-color3 { background-color: #28a745; }
+.bg-color4 { background-color: #ffca33; }
+.bg-color5 { background-color: #aa33ff; }
+
+.coach-name {
+    display: flex;
+    align-items: center;
+}
+
+.action-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #525f7f;
+}
+
+.action-button .dots {
+    font-size: 18px;
+}
+
+.checkbox-coach {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-coach input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.top-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.bulk-actions {
+    display: flex;
+    align-items: center;
+}
+
+.bulk-actions button,
+.bulk-actions select {
+    margin-right: 10px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #383a3d;
+    cursor: pointer;
+}
+
+.bulk-actions select:hover {
+    background-color: #f7f7f7;
+}
+
+.right-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.right-buttons button,
+.right-buttons .icon-button {
+    margin-left: 10px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #525f7f;
+    cursor: pointer;
+}
+
+.right-buttons button:hover,
+.right-buttons .icon-button:hover {
+    background-color: #f7f7f7;
+}
+
+.right-buttons .icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.right-buttons .icon-button:hover {
+    background-color: #0056b3;
+}

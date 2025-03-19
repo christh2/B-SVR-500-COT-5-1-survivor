@@ -1,0 +1,169 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.navbar {
+    background-color: #fff;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar .logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+}
+
+.navbar div:nth-child(2) {
+    display: flex;
+    justify-content: center;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    margin: 0 15px;
+    font-weight: bold;
+    position: relative;
+}
+
+.navbar a.active {
+    color: #007bff;
+}
+
+.navbar a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    border-radius: 3px;
+    background-color: #007bff;
+}
+
+.navbar .right-icons {
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    margin-left: 10px;
+}
+
+.navbar .icon2 {
+    font-size: 18px;
+}
+
+.navbar .globe {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 90px;
+    background-color: #f1f1f1;
+    color: #333;
+    margin-top: -10px;
+}
+
+.header h1 {
+    margin: 0;
+    margin-left: -55px;
+}
+
+.back-button {
+    padding: 10px 20px;
+    background-color: white;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: -50px;
+    font-size: 16px;
+}
+
+.add-button {
+    padding: 10px 20px;
+    background-color: rgb(24, 38, 192);
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: -1600px;
+    font-size: 16px;
+}
+
+.box {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 2000px; /* Limite la largeur pour le contenu */
+    margin: 5px auto; /* Centrer avec un espace en haut */
+}
+
+.question {
+    margin-bottom: 10px;
+}
+
+.question button {
+    width: 98%;
+    padding: 10px;
+    background-color: white;
+    color: gray;
+    border: none;
+    border: 1px solid;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.question button:hover {
+    background-color: #5b9bde;
+}
+
+.answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    padding: 0 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.answer p {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-left: 3px solid #007bff;
+    margin: 0;
+}
+
+.question.active .answer {
+    max-height: 200px;
+}
+
+.question.active button::after {
+    content: '\25B2';
+}
+
+.question button::after {
+    content: '\25BC';
+}

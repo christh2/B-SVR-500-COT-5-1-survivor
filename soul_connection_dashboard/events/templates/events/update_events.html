@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update event page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style_employee.css' %}">
+</head>
+
+<body>
+    {% block content %}
+    <div class="navbar">
+        <div class="logo">Soul Connection</div>
+        <div>
+            <a href="{% url 'admin_app:dash' %}">Dashboard</a>
+            <a href="{% url 'coachs:coach' %}">Coaches</a>
+            <a href="{% url 'customers:customer' %}">Customers</a>
+            <a href="{% url 'tips:tips-list' %}">Tips</a>
+            <a href="{% url 'events:event-list' %}"class="active">Events</a>
+            <a href="{% url 'customers:compatibility' %}">Compatibility</a>
+        </div>
+        <div class="right-icons">
+            <div class="globe">🌍</div>
+            <div class="icon2">👤</div>
+        </div>
+    </div>
+    <div class="form-container">
+        <h1>Update Event</h1>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="input-field">
+                    <label for="id">Event id:</label>
+                    {{ form.id }}
+                </div>
+                <div class="input-field">
+                    <label for="name">Event name</label>
+                    {{ form.name }}
+                </div>
+                <div class="input-field">
+                    <label for="date">Event date:</label>
+                    {{ form.date }}
+                </div>
+                <div class="input-field">
+                    <label for="duration">Event duration:</label>
+                    {{ form.duration }}
+                </div>
+                <div class="input-field">
+                    <label for="max_participants">Max participants:</label>
+                    {{ form.max_participants }}
+                </div>
+                <div class="input-field">
+                    <label for="location_x">Location x:</label>
+                    {{ form.location_x }}
+                </div>
+                <div class="input-field">
+                    <label for="location_y">Location y:</label>
+                    {{ form.location_y }}
+                </div>
+                <div class="input-field">
+                    <label for="type">Type:</label>
+                    {{ form.type }}
+                </div>
+                <div class="input-field">
+                    <label for="employee">Employee:</label>
+                    {{ form.employee }}
+                </div>
+                <div class="input-field">
+                    <label for="location_name">Location name:</label>
+                    {{ form.location_name }}
+                </div>
+            </div>
+            <button type="submit" class="btn-submit">Create</button>
+        </form>
+    </div>
+    {% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suppression d'utilisateur</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style_delete_cus.css' %}">
+</head>
+
+<body>
+    {% block content %}
+    <div class="navbar">
+        <div class="logo">Soul Connection</div>
+        <div>
+            <a href="{% url 'admin_app:dash' %}">Dashboard</a>
+            <a href="{% url 'coachs:coach' %}">Coaches</a>
+            <a href="{% url 'customers:customer' %}" class="active">Customers</a>
+            <a href="{% url 'tips:tips-list' %}">Tips</a>
+            <a href="{% url 'events:event-list' %}">Events</a>
+            <a href="{% url 'customers:compatibility' %}">Compatibility</a>
+        </div>
+        <div class="right-icons">
+            <div class="globe">🌍</div>
+            <div class="icon2">👤</div>
+        </div>
+    </div>
+
+    <button class="back-button" onclick="history.back()">Back</button>
+
+    <div class="container home">
+        <div class="confirmation-box">
+            <p>Do you really want to delete {{customers.name}} {{customers.surname}} ?</p>
+            <form method="POST" action="{% url 'customers:customer-delete' customers.id %}">
+                {% csrf_token %}
+                <button type="submit" class="confirm-button">Confirm</button>
+                <button type="button" id="cancelDelete" class="cancel-button">Cancel</button>
+            </form>
+
+            <div class="delete-message" id="deleteMessage" style="display: none;">This user has been deleted.</div>
+        </div>
+    </div>
+
+    <script>
+        // Gestion du bouton "Annuler"
+        document.getElementById("cancelDelete").onclick = function () {
+            history.back();
+        }
+
+        // Simuler un message de confirmation de suppression si le formulaire est soumis
+        document.querySelector("form").onsubmit = function (event) {
+            event.preventDefault(); // Bloquer la soumission par défaut pour la démonstration
+
+            // Simuler la suppression
+            var deleteMessage = document.getElementById("deleteMessage");
+            deleteMessage.style.display = "block";
+
+            // Simuler une redirection après suppression (à remplacer par la logique Django si nécessaire)
+            setTimeout(function () {
+                event.target.submit(); // Soumission réelle du formulaire après un délai de 2 secondes
+            }, 2000);
+        }
+    </script>
+
+    {% endblock %}
+</body>
+</html>

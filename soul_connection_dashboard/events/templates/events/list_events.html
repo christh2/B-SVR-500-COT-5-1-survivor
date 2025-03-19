@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive calendar</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style_event.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+</head>
+
+<body>
+{% block content %}
+    <div class="navbar">
+        <div class="logo">Soul Connection</div>
+        <div>
+            <a href="{% url 'admin_app:dash' %}">Dashboard</a>
+            <a href="{% url 'coachs:coach' %}">Coaches</a>
+            <a href="{% url 'customers:customer' %}">Customers</a>
+            <a href="{% url 'tips:tips-list' %}">Tips</a>
+            <a href="{% url 'events:event-list' %}" class="active">Events</a>
+            <a href="{% url 'customers:compatibility' %}">Compatibility</a>
+        </div>
+        <div class="right-icons">
+            <div class="globe">🌍</div>
+            <div class="icon2">👤</div>
+        </div>
+    </div>
+    <div class="header">
+        <h1>Events</h1>
+        <a href="{% url 'events:event-create' %}">
+            <button class="add-button">+ Add Event</button>
+        </a>
+        <button type="button" id="cancelDelete" class="back-button"><span>&larr;</span>Back</button>
+    </div>
+
+    <table class="customer-table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Duration</th>
+        <th>max_participants</th>
+        <th>location_x</th>
+        <th>location_y</th>
+        <th>type</th>
+        <th>employee</th>
+        <th>location_name</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for cus in event_tab %}
+        <tr>
+            <td>
+                {{ cus.id }}
+            </td>
+            <td>
+                <a href="{% url 'events:update-event' cus.id %}"
+                   style="text-decoration:none; color:#063666; font-weight:bold;">{{ cus.name }}</a>
+            </td>
+            <td>{{ cus.date }}</td>
+            <td>{{ cus.duration }}</td>
+            <td>{{ cus.max_participants }}</td>
+            <td>{{ cus.location_x }}</td>
+            <td>{{ cus.location_y }}</td>
+            <td>{{ cus.type }}</td>
+            <td>{{ cus.employee }}</td>
+            <td>{{ cus.location_name }}</td>
+        </tr>
+        </tbody>
+    {% endfor %}
+    </table>
+
+    <div id="calendar" style="margin-top: 100px"></div>
+    <div id="eventModal" style="display:none;">
+        <label for="eventTitleInput">
+            <input type="text" id="eventTitleInput" placeholder="Enter new event title">
+        </label>
+        <button id="saveEventTitle">Save</button>
+    </div>
+    <script>
+        var selectedEvent = null;
+
+        function getRandomClass() {
+            const classes = ['random-color-1', 'random-color-2', 'random-color-3', 'random-text-color'];
+            return classes[Math.floor(Math.random() * classes.length)];
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'title prev,next',
+                    center: '',
+                    right: 'today dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: async function (fetchInfo, successCallback, failureCallback) {
+                    try {
+                        const response = await fetch('/events/list/');
+                        const data = await response.json();
+
+                        const events = data.map(event => ({
+                            title: event.title,
+                            start: event.start,
+                            end: event.end,
+                            className: getRandomClass()
+                        }));
+
+                        successCallback(events);
+                    } catch (error) {
+                        console.error('Error while collecting events data:', error);
+                        failureCallback(error);
+                    }
+                },
+                eventClick: function (info) {
+                    selectedEvent = info.event;
+                    document.getElementById('eventTitleInput').value = selectedEvent.title;
+                    document.getElementById('eventModal').style.display = 'block';
+                }
+            });
+            calendar.render();
+        });
+
+        document.getElementById('saveEventTitle').addEventListener('click', function () {
+            if (selectedEvent) {
+                var newTitle = document.getElementById('eventTitleInput').value;
+                selectedEvent.setProp('title', newTitle);
+                document.getElementById('eventModal').style.display = 'none';
+            }
+        });
+    </script>
+{% endblock %}
+</body>
+
+</html>

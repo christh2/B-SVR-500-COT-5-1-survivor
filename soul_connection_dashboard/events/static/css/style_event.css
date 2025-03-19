@@ -1,0 +1,243 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #fff;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar .logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+}
+
+.navbar div:nth-child(2) {
+    display: flex;
+    justify-content: center;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    margin: 0 15px;
+    font-weight: bold;
+    position: relative;
+}
+
+.navbar a.active {
+    color: #007bff;
+}
+
+.navbar a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    border-radius: 3px;
+    background-color: #007bff;
+}
+
+.navbar .right-icons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 10px;
+}
+
+.navbar .icon2 {
+    font-size: 18px;
+}
+
+.navbar .globe {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    color: #555;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 90px;
+    background-color: #f1f1f1;
+    color: #333;
+    margin-top: -10px;
+}
+
+.header h1 {
+    margin: 0;
+    margin-left: -55px;
+}
+
+.back-button {
+    padding: 10px 20px;
+    background-color: white;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: -1700px;
+    font-size: 16px;
+}
+
+.add-button {
+    padding: 10px 20px;
+    background-color: rgb(16, 28, 187);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: -50px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.mod-button {
+    padding: 10px 20px;
+    background-color: rgb(16, 28, 187);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: -50px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.customer-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.customer-table th,
+.customer-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.customer-table th {
+    background-color: #f2f2f2;
+}
+
+.customer-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+#calendar {
+    max-width: 2000px;
+    max-height: 900px;
+    margin: -55px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.fc .fc-toolbar-title {
+    color: #2c3e50;
+    /* Texte de l'entête */
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.fc .fc-button {
+    background-color: #e7ecf1;
+    color: #34495e;
+    border-radius: 4px;
+    font-size: 14px;
+    border: none;
+    padding: 8px 12px;
+}
+
+.fc .fc-button:hover {
+    background-color: #dfe6ed;
+    color: #2c3e50;
+}
+
+.fc .fc-daygrid-event {
+    border: none;
+    border-radius: 6px;
+    padding: 5px 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Couleurs spécifiques des événements */
+.fc-event.random-color-1 {
+    background-color: #3498db;
+    /* Bleu doux */
+    color: white;
+}
+
+.fc-event.random-color-2 {
+    background-color: #e74c3c;
+    /* Rouge */
+    color: white;
+}
+
+.fc-event.random-color-3 {
+    background-color: #2ecc71;
+    /* Vert */
+    color: white;
+}
+
+.fc-event.random-text-color {
+    background-color: #ecf0f1;
+    /* Fond clair */
+    color: #34495e;
+    /* Texte foncé */
+    border: 1px solid #bdc3c7;
+}
+
+.fc .fc-daygrid-event-dot {
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+/* Transition pour un effet plus fluide */
+.fc .fc-daygrid-event:hover {
+    background-color: #f1c40f !important;
+    color: #fff !important;
+    transition: background-color 0.3s ease;
+}
+
+/* Styles pour aligner les éléments de la barre d'en-tête */
+.fc-toolbar-chunk {
+    display: flex;
+    align-items: center;
+}
+
+/* Style du bouton "today" pour être indépendant */
+.fc-today-button {
+    margin-right: 10px !important;
+}
+
+/* Ajuster la disposition des boutons "prev" et "next" */
+.fc-prev-button,
+.fc-next-button {
+    margin-left: 10px;
+}

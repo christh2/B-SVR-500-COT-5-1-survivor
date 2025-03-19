@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Compatibility</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #fff;
+            padding: 15px 30px;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #007bff;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #555;
+            margin-right: 25px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a.active {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+        }
+
+        .navbar a:hover {
+            color: #007bff;
+        }
+
+        .navbar .right-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .icon {
+            margin-left: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Container Styles */
+        .container {
+            max-width: 700px;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 40px;
+            margin: 100px auto;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #007bff;
+        }
+
+        /* Formulaire Styles */
+        .selectors {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .selectors div {
+            width: 48%;
+        }
+
+        label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            transition: all 0.3s ease;
+        }
+
+        select:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 30px;
+            font-size: 22px;
+            text-align: center;
+            font-weight: 600;
+            color: #28a745;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .selectors {
+                flex-direction: column;
+            }
+
+            .selectors div {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="logo">Soul Connection</div>
+        <div>
+            <a href="{% url 'admin_app:dash' %}">Dashboard</a>
+            <a href="{% url 'coachs:coach' %}">Coaches</a>
+            <a href="{% url 'customers:customer' %}">Customers</a>
+            <a href="{% url 'tips:tips-list' %}">Tips</a>
+            <a href="{% url 'events:event-list' %}">Events</a>
+            <a href="{% url 'customers:compatibility' %}" class="active">Compatibility</a>
+        </div>
+        <div class="right-icons">
+            <div class="icon">🌍</div>
+            <div class="icon">👤</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Check Compatibility Between Clients</h1>
+
+        <form id="compatibilityForm" action="" method="post">
+            {% csrf_token %}
+            <div class="selectors">
+                <div>
+                    <label for="client1">First Client:</label>
+                    {{ form_log.first_client }}
+                </div>
+                <div>
+                    <label for="client2">Second Client:</label>
+                    {{ form_log.second_client }}
+                </div>
+            </div>
+
+            <button type="submit">Calculate Compatibility</button>
+        </form>
+
+        <div class="result" id="compatibilityResult">
+            Compatibility Percentage: {{ percentage }}%
+        </div>
+    </div>
+
+</body>
+</html>

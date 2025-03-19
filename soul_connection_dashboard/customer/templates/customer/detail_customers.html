@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer details</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style_det_custo.css' %}">
+</head>
+<body>
+    {% block content %}
+    <div class="navbar">
+        <div class="logo">Soul Connection</div>
+        <div>
+            <a href="{% url 'admin_app:dash' %}">Dashboard</a>
+            <a href="{% url 'coachs:coach' %}">Coaches</a>
+            <a href="{% url 'customers:customer' %}"class="active">Customers</a>
+            <a href="{% url 'tips:tips-list' %}">Tips</a>
+            <a href="{% url 'events:event-list' %}">Events</a>
+            <a href="{% url 'customers:compatibility' %}">Compatibility</a>
+        </div>
+        <div class="right-icons">
+            <div class="globe">🌍</div>
+            <div class="icon2">👤</div>
+        </div>
+    </div>
+    <!-- Header with Title and Back Button -->
+    <div class="header">
+        <h1>Customer Details</h1>
+        <button type="button" id="cancelDelete" class="back-button"><span>&larr;</span>Back</button>
+    </div>
+    <div class="container">
+        <!-- Left Pane -->
+        <div class="left-pane-box">
+            <div class="left-pane">
+                <div class="user-info">
+                    <img src="{{ customers.image.url }}" alt="User Photo">
+                    <h2>{{ customers.name }} {{ customers.surname }}</h2>
+                </div>
+                <!-- <div class="icon-container">
+                    <p class="email-icon"><i class="fas fa-envelope"></i></p>
+                    <p class="favorite-icon">
+                        <img src="{% static 'images/favori.png' %}" alt="Favorite" class="favorite-img">
+                    </p>
+                </div> -->
+                <div class="table-container-user">
+                    <table>
+                        <tr>
+                            <th>{{ meetings | length }}</th>
+                            <th>{{ positives }}</th>
+                            <th>{{ progess }}</th>
+                        </tr>
+                        <tr>
+                            <td>Total <br> Encounters</td>
+                            <td>Positives</td>
+                            <td>In progress</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="short-details">
+                    <div class="detail-item">
+                        <strong>User ID</strong>
+                        <p>{{ customers.id }}</p>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Email</strong>
+                        <p>{{ customers.email }}</p>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Description</strong>
+                        <p>{{ customers.description }}</p>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Address</strong>
+                        <p>{{ customers.address }}</p>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Last Activity</strong>
+                        <p>{{ customers.last_login }}</p>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Coach</strong>
+                        <p>{{ customers.coach.name }} {{ customers.coach.surname }}</p>
+                    </div>
+                    <div class="action-buttons">
+                        <a href="{% url 'customers:customer-clothes' customers.id %}" class="vet-button">Client Clothes</a>
+                        <a href="{% url 'customers:customer-update' customers.id %}" class="edit-button">Edit</a>
+                        <a href="{% url 'customers:customer-delete' customers.id %}" class="delete-button">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Right Pane (Tables) -->
+        <div class="right-pane">
+            <div class="table-container">
+                <h3>Recent Meetings</h3>
+                <table class="meeting-table">
+                    <tr>
+                        <th>Date</th>
+                        <th>Rating</th>
+                        <th>Report</th>
+                        <th>Source</th>
+                    </tr>
+                    {% for meeting in meetings %}
+                    <tr>
+                        <td>{{ meeting.date }}</td>
+                        <td class="stars">
+                            <!-- Loop to display filled and empty stars based on the rating -->
+                            {% for i in "12345" %}
+                                {% if i <= meeting.rating %}
+                                    <span class="star filled">&#9733;</span> <!-- Filled star for the rating -->
+                                {% else %}
+                                    <span class="star empty">&#9733;</span> <!-- Empty star for the remaining -->
+                                {% endif %}
+                            {% endfor %}
+                        </td>                        
+                        <td>{{ meeting.comment }}</td>
+                        <td class="source {% cycle 'source-yellow' 'source-green' 'source-blue' %}">
+                            {{ meeting.source }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+    
+            <div class="table-container">
+                <h3>Payment History</h3>
+                <table class="payment-table">
+                    <tr>
+                        <th>Date</th>
+                        <th>Payment Method</th>
+                        <th>Amount</th>
+                        <th>Comment</th>
+                    </tr>
+                    {% for pay in payment %}
+                    <tr>
+                        <td>{{ pay.date }}</td>
+                        <td>
+                            {% if pay.payment_method == 'Bank Transfer' %}
+                                <img src="{% static 'images/visa.png' %}" alt="Bank Transfer" class="payment-icon">
+                            {% elif pay.payment_method == 'Credit Card' %}
+                                <img src="{% static 'images/mastercard.png' %}" alt="Credit Card" class="payment-icon">
+                            {% elif pay.payment_method == 'PayPal' %}
+                                <img src="{% static 'images/paypal.png' %}" alt="PayPal" class="payment-icon">
+                            {% else %}
+                                {{ pay.payment_method }}
+                            {% endif %}
+                        </td>
+                        <td class="amount">${{ pay.amount }}</td>
+                        <td>{{ pay.comment }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("cancelDelete").onclick = function () {
+            history.back();
+        }
+    </script>
+    {% endblock %}
+</body>
+</html>

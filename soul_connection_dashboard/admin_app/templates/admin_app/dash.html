@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        .navbar {
+            background-color: #fff;
+            padding: 15px 30px;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #007bff;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #555;
+            margin-right: 25px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a.active {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+        }
+
+        .navbar a:hover {
+            color: #007bff;
+        }
+
+        .navbar .right-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .icon {
+            margin-left: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .charts-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .chart-container {
+            border: 1px solid rgb(230, 222, 222);
+            padding: 20px;
+            border-radius: 5px;
+            width: 40%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .stats-header {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .stats-header div {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .period-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .period-buttons button {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            background-color: #f5f5f5;
+            cursor: pointer;
+        }
+
+        .period-buttons button:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .calendar {
+            margin-bottom: 10px;
+            text-align: right;
+        }
+
+        .world-map-container {
+            position: relative;
+            text-align: center;
+            max-width: 50%;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .world-map-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .logout-button {
+            padding: 5px 15px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            background-color: white;
+            cursor: pointer;
+            margin-left: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    {% block content %}
+    <div class="navbar">
+        <div class="logo">Soul Connection</div>
+        <div>
+            <a href="{% url 'admin_app:dash' %}" class="active">Dashboard</a>
+            <a href="{% url 'coachs:coach' %}">Coaches</a>
+            <a href="{% url 'customers:customer' %}">Customers</a>
+            <a href="{% url 'tips:tips-list' %}">Tips</a>
+            <a href="{% url 'events:event-list' %}">Events</a>
+            <a href="{% url 'customers:compatibility' %}">Compatibility</a>
+        </div>
+        <div class="right-icons">
+            <div class="icon">🌍</div>
+            <div class="icon">👤</div>
+            {% if user.is_authenticated %}
+            <a href="{% url 'admin_app:logout' %}" class="logout-button">Se déconnecter</a>
+            {% endif %}
+        </div>
+    </div>
+    
+
+    <div class="charts-container">
+        <!-- Nombre de clients -->
+        <div class="chart-container">
+            <div class="stats-header">
+                <div>{{ customers|length }} Customers</div>
+                <div>{{ nbr_employees|length }} Employees</div>
+                <div>{{ nbr_coach }} Coaches</div>
+
+                <div class="period-buttons">
+                    <button onclick="filterData('1W')">1W</button>
+                    <button onclick="filterData('1M')">1M</button>
+                    <button onclick="filterData('3M')">3M</button>
+                </div>
+            </div>
+            <canvas id="customersChart"></canvas>
+        </div>
+
+        <!-- Événements -->
+        <div class="chart-container">
+            <div class="stats-header">
+                <div>{{ events|length }} Events</div>
+                <div>{{ encounter|length }} Meetings</div>
+                
+                <select id="yearSelector" onchange="updateEventsChart()">
+                    <option value="">Select Year</option>
+                </select>
+            </div>
+            <canvas id="eventsChart"></canvas>
+        </div>
+    </div>
+
+    <div class="charts-container">
+        <div class="chart-container">
+            <div class="stats-header">
+                <div>Customers by Country</div>
+                <div>France: 50 <br> <br> Benin: 28 <br> <br> Nigeria:22 </div>
+            </div>
+            <div class="world-map-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg"
+                    alt="World Map">
+            </div>
+        </div>
+
+
+        <div class="chart-container">
+            <div class="stats-header">
+                <div>Meeting Top Source</div>
+                <!-- <div>{{ source }} </div> -->
+            </div>
+            <canvas id="meetingTopSourceChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Importation de Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@1.0.3"></script>
+
+    {% endblock %}
+
+    <script>
+        function distributeData(total, percentages) {
+            let distributedData = percentages.map(p => Math.round((p / 100) * total));
+            let sum = distributedData.reduce((a, b) => a + b, 0);
+            let diff = total - sum;
+            distributedData[distributedData.length - 1] += diff;
+
+            return distributedData;
+        }
+
+        var customersData = {{ customers| length }};
+        var customersPercentages = [10, 15, 20, 10, 20, 5, 15, 5];
+        var distributedCustomers = distributeData(customersData, customersPercentages);
+
+        // Graph des clients
+        var ctxCustomers = document.getElementById('customersChart').getContext('2d');
+        var customersChart = new Chart(ctxCustomers, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+                datasets: [{
+                    label: 'Number of Customers',
+                    data: distributedCustomers,
+                    borderColor: 'rgba(102, 178, 255, 1)',
+                    fill: false,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        function filterData(period) {
+            if (period === '1W') {
+                customersChart.data.labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                customersChart.data.datasets[0].data = [20, 30, 10, 40, 25, 50, 15];
+            } else if (period === '1M') {
+                customersChart.data.labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+                customersChart.data.datasets[0].data = [100, 200, 150, 300];
+            } else if (period === '3M') {
+                customersChart.data.labels = ['July', 'August', 'September'];
+                customersChart.data.datasets[0].data = [424, 515, ];
+            }
+
+            customersChart.update();
+        }
+
+        var eventsData = {{ events| length }};
+        var eventsPercentages = [10, 20, 15, 10, 20, 10, 15];
+        var distributedEvents = distributeData(eventsData, eventsPercentages);
+
+        // Graph des événements
+        var eventsData = {{ final_year_month | safe }};
+        var years = Object.keys(eventsData).filter(key => key !== "");
+
+        var yearSelector = document.getElementById('yearSelector');
+        years.forEach(year => {
+            var option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            yearSelector.appendChild(option);
+        });
+
+        var ctxEvents = document.getElementById('eventsChart').getContext('2d');
+        var eventsChart = new Chart(ctxEvents, {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Number of Events',
+                    data: [],
+                    backgroundColor: 'rgba(102, 178, 255, 0.3)',
+                    borderColor: 'rgba(102, 178, 255, 0.3)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        function updateEventsChart() {
+            var selectedYear = yearSelector.value;
+            if (!selectedYear) return;
+
+            var monthData = eventsData[selectedYear];
+            var labels = Object.keys(monthData);
+            var data = Object.values(monthData);
+
+            eventsChart.data.labels = labels;
+            eventsChart.data.datasets[0].data = data;
+            eventsChart.update();
+        }
+
+        if (years.length > 0) {
+            yearSelector.value = years[0];
+            updateEventsChart();
+        }
+
+
+        // meeting source graph
+        var sourceData = {{ source | safe }};
+
+        var labels = Object.keys(sourceData);
+        var values = Object.values(sourceData);
+
+        var ctxPie = document.getElementById('meetingTopSourceChart').getContext('2d');
+        var pieChart = new Chart(ctxPie, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: values,
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F40', '#9966FF', '#FFCD56',
+                        '#4B0082', '#FFD700', '#D2691E', '#DC143C', '#00FF7F', '#ADFF2F', '#1E90FF',
+                        '#fa123f', '#ffa123', '#36ABC', '#DFD12', '#A46D2B'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+</body>
+
+</html>

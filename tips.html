@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questions et Réponses</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%; /* La box prend toute la largeur */
+            max-width: 100%; /* Assure que la box ne dépasse pas 100% */
+            margin: 20px; /* Ajoute un peu d'espace autour */
+        }
+
+        h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 18px; /* Réduire la taille du texte du titre */
+}
+
+.question button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px; /* Réduire la taille du texte des questions */
+}
+
+.answer p {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-left: 3px solid #007bff;
+    margin: 0;
+    font-size: 13px; /* Réduire la taille du texte des réponses */
+}
+
+        .question button:focus {
+            outline: none;
+        }
+
+        .question button:hover {
+            background-color: #0056b3;
+        }
+
+        .question button::after {
+            content: '\25BC'; /* Flèche vers le bas */
+            font-size: 5px;
+        }
+
+        .answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            padding: 0 10px;
+        }
+
+        .answer p {
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-left: 3px solid #007bff;
+            margin: 0;
+        }
+
+        .question.active .answer {
+            max-height: 10px; /* Ajuster la hauteur maximale */
+        }
+
+        .question.active button::after {
+            content: '\25B2'; /* Flèche vers le haut */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>Questions et Réponses</h2>
+
+        {% for question in questions %}
+        <div class="question">
+            <button onclick="toggleAnswer(this)">{{ question.question_text }}</button>
+            <div class="answer">
+                <p>{{ question.answer_text }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function toggleAnswer(element) {
+            const questions = document.querySelectorAll('.question'); // Récupère toutes les questions
+            const currentQuestion = element.parentElement;
+
+            questions.forEach(question => {
+                if (question !== currentQuestion) {
+                    question.classList.remove("active");
+                }
+            });
+
+            currentQuestion.classList.toggle("active");
+        }
+    </script>
+
+</body>
+</html>

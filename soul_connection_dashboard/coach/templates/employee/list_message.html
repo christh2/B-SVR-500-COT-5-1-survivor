@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style_tips.css' %}">
+    <title>Questions et Réponses</title>
+</head>
+<body>
+    {% block content %}
+    <div class="navbar">
+        <div class="logo">Soul Connection</div>
+        <div>
+            <a href="{% url 'admin_app:dash' %}">Dashboard</a>
+            <a href="{% url 'coachs:coach' %}" class="active">Coaches</a>
+            <a href="{% url 'customers:customer' %}">Customers</a>
+            <a href="{% url 'tips:tips-list' %}">Tips</a>
+            <a href="{% url 'events:event-list' %}">Events</a>
+            <a href="{% url 'customers:compatibility' %}">Compatibility</a>
+        </div>
+        <div class="right-icons">
+            <div class="globe">🌍</div>
+            <div class="icon2">👤</div>
+        </div>
+    </div>
+
+    <div class="header">
+        <h1>Inbox</h1>
+    </div>
+
+    <div class="box">
+        {% for question in my_messages %}
+        <div class="question">
+            <button onclick="toggleAnswer(this)">{{ question.sender }}</button>
+            <div class="answer">
+                <p>{{ question.content }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function toggleAnswer(element) {
+            const questions = document.querySelectorAll('.question');
+            const currentQuestion = element.parentElement;
+
+            questions.forEach(question => {
+                if (question !== currentQuestion) {
+                    question.classList.remove("active");
+                }
+            });
+
+            currentQuestion.classList.toggle("active");
+        }
+
+        document.getElementById("cancelDelete").onclick = function () {
+            history.back();
+        }
+    </script>
+    {% endblock %}
+</body>
+</html>

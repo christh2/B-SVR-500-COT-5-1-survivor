@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer details</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style_detail_emplo.css' %}">
+</head>
+<body>
+    {% block content %}
+    <div class="navbar">
+        <div class="logo">Soul Connection</div>
+        <div>
+            <a href="{% url 'admin_app:dash' %}">Dashboard</a>
+            <a href="{% url 'coachs:coach' %}"class="active">Coaches</a>
+            <a href="{% url 'customers:customer' %}">Customers</a>
+            <a href="{% url 'tips:tips-list' %}">Tips</a>
+            <a href="{% url 'events:event-list' %}">Events</a>
+            <a href="{% url 'customers:compatibility' %}">Compatibility</a>
+        </div>
+        <div class="right-icons">
+            <div class="globe">🌍</div>
+            <div class="icon2">👤</div>
+        </div>
+    </div>
+    <!-- Header with Title and Back Button -->
+    <div class="header">
+        <h1>Coach Details</h1>
+        <button type="button" id="cancelDelete" class="back-button"><span>&larr;</span>Back</button>
+    </div>
+    <div class="container">
+        <!-- Left Pane -->
+        <div class="left-pane-box">
+            <div class="left-pane">
+                <div class="user-info">
+                    <img src="{{ employee.image.url }}" alt="User Photo">
+                    <h2>{{ employee.name }} {{ employee.surname }}</h2>
+                </div>
+                <div class="icone">
+                    <p><i class="fas fa-envelope"></i></p>
+                </div>
+                <div class="short-details">
+                    <div class="detail-item">
+                        <strong>User ID</strong>
+                        <p>{{ employee.id }}</p>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Email</strong>
+                        <p>{{ employee.email }}</p>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Address</strong>
+                        <p>{{ employee.address }}</p>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Last Activity</strong>
+                        <p>{{ employee.last_login }}</p>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Number of customers</strong>
+                        <p>{{ customers|length }}</p>
+                    </div>
+                    <div class="mes-buttons">
+                        <a href="{% url 'coachs:message-create' employee.id %}" class="chat-button">Message</a>
+                        <a href="{% url 'coachs:message-list' employee.id %}" class="inb-button">Inbox</a>
+                    </div>
+                    <div class="mod-buttons">
+                        <a href="{% url 'coachs:coach-update' employee.id %}" class="edit-button">Edit</a>
+                        <a href="{% url 'coachs:coach-delete' employee.id %}" class="delete-button">Delete</a>
+                    </div>
+                    {% if user.is_authenticated %}
+                        <br> <a href="{% url 'admin_app:logout' %}">Se déconnecter</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="right-pane">
+            <table class="coach-table">
+                <thead>
+                    <tr>
+                        <th>Customers</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cus in customers %}
+                    <tr>
+                        <td class="checkbox-customer">
+                            <input type="checkbox" name="select_customer" value="{{ cus.id }}">
+                            <div class="customer-name">
+                                <div class="initial-circle" data-initials="{{ customer.name|slice:" :1" }}{{
+                                    customer.surname|slice:":1" }}">
+                                    {{ cus.name|slice:":1" }}{{ cus.surname|slice:":1" }}
+                                </div>
+                                <a href="{% url 'customers:customer-detail' cus.id%}">{{ cus.name }} {{ cus.surname }}</a>
+                            </div>
+                        </td>
+                        <td>{{ cus.email }}</td>
+                        <td>{{ cus.phone_number}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        document.querySelectorAll('.initial-circle').forEach(circle => {
+            circle.style.backgroundColor = getRandomColor();
+        });
+
+        document.getElementById("cancelDelete").onclick = function () {
+            history.back();
+        }
+    </script>
+    {% endblock %}
+</body>
+</html>
